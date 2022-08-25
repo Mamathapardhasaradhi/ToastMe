@@ -52,6 +52,14 @@ open class ToastMe: UIView {
         messageLabel.textAlignment = .left
         messageLabel.text = "Hello world"
         contentView.addSubview(messageLabel)
+        self.addSubview(contentView)
+        
+        // Get current window
+        var currentWindow: UIWindow? = UIApplication.shared.keyWindow
+        currentWindow = currentWindow ?? UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        currentWindow = currentWindow ?? UIApplication.shared.windows.first
+        
+        currentWindow?.addSubview(self)
 
     }
 }
