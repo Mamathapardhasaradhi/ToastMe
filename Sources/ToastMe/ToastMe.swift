@@ -14,6 +14,8 @@ public struct ToastMeStr {
 
 open class ToastMe: UIView {
     
+    public private(set) var text = "Hello, World!"
+    
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
