@@ -27,39 +27,20 @@ open class ToastMe: UIView {
 
     func configure() {
         // Clear subViews
-        for subView in subviews {
-            subView.removeFromSuperview()
-        }
-        
-        
-        
-        layer.shadowOpacity = 0.4
-        layer.shadowRadius = 2
-        layer.shadowColor = UIColor.red.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 2)
-        
-        let contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.frame = CGRect(x: 0, y: 0, width: 320, height: 44)
-        contentView.backgroundColor = UIColor.orange
-        
-        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
-        messageLabel.accessibilityIdentifier = "messageLabel"
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.textColor = UIColor.white
-        messageLabel.backgroundColor = UIColor.yellow
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = .left
-        messageLabel.text = "Hello world"
-        contentView.addSubview(messageLabel)
-        self.addSubview(contentView)
-        
-        // Get current window
-        var currentWindow: UIWindow? = UIApplication.shared.keyWindow
-        currentWindow = currentWindow ?? UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-        currentWindow = currentWindow ?? UIApplication.shared.windows.first
-        
-        currentWindow?.addSubview(self)
+        loadViewFromNib()
+    }
+}
 
+extension UIView {
+    func loadViewFromNib() {
+        let nibName = NSStringFromClass(type(of: self)).components(separatedBy: ".").last!
+        let view = Bundle(for: type(of: self)).loadNibNamed(nibName, owner: self, options: nil)?.first as! UIView
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        
+        let views = ["view": view]
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+        setNeedsUpdateConstraints()
     }
 }
