@@ -3,4 +3,8 @@ public struct ToastMe {
 
     public init() {
     }
+    
+    public func showHelloWorld() -> String {
+        return "Hello world"
+    }
 }
